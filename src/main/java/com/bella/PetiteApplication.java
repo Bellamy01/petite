@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @SpringBootApplication
 @RestController
 public class PetiteApplication {
@@ -14,37 +16,16 @@ public class PetiteApplication {
 	}
 
     @GetMapping("/")
-    public GreetResponse greet() {
-        return new GreetResponse("Hello");
+    public GreetJson greet() {
+        return new GreetJson("Hello Teachers!",
+                new Employee("Gordon", 30, "System Analyst"),
+                List.of("Louis Vuitton", "Zoey", "North Face")
+        );
     }
 
-    //private record GreetResponse(String greet) {}
+    record Employee(String name, int age, String position) {}
 
-    public static class GreetResponse {
-        private final String greet;
+    record Languages(List<String> programs) {}
 
-        public GreetResponse(String greet) {
-            this.greet = greet;
-        }
-
-        public String getGreet() {
-            return greet;
-        }
-
-        @Override
-        public int hashCode() {
-            return super.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return super.equals(obj);
-        }
-
-        @Override
-        public String toString() {
-            return "Greet Response {" + "greet = '" + greet + "'}";
-        }
-    }
-
+    private record GreetJson(String greet, Employee employee, List<String> languages) {}
 }
